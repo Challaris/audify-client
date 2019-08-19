@@ -1,0 +1,126 @@
+body {
+  font-family: 'Google Sans', sans-serif;
+}
+*:focus {
+  outline: none;
+}
+.h-screen-half{
+  height:50vh;
+}
+.p-1p5{
+  padding: 0.4rem;
+}
+.mb-1p5{
+  margin-bottom: 0.4rem;
+}
+.text-2xs{
+  font-size: 0.70rem;
+}
+
+.spinner {
+  -webkit-animation: rotate 2s linear infinite;
+          animation: rotate 2s linear infinite;
+  z-index: 2;
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px; */
+  width: 50px;
+  height: 50px;
+}
+.spinner .path {
+  stroke: #005e54;
+  stroke-linecap: round;
+  -webkit-animation: dash 1.5s ease-in-out infinite;
+          animation: dash 1.5s ease-in-out infinite;
+}
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: local('Google Sans Bold'), local('GoogleSans-Bold'),
+    url('../fonts/GoogleSans-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: local('Google Sans Medium Italic'), local('GoogleSans-MediumItalic'),
+    url('../fonts/GoogleSans-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: local('Google Sans Italic'), local('GoogleSans-Italic'),
+    url('../fonts/GoogleSans-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: local('Google Sans Regular'), local('GoogleSans-Regular'),
+    url('../fonts/GoogleSans-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: local('Google Sans Medium'), local('GoogleSans-Medium'),
+    url('../fonts/GoogleSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  src: local('Google Sans Bold Italic'), local('GoogleSans-BoldItalic'),
+    url('../fonts/GoogleSans-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+}

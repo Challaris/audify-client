@@ -30,3 +30,7 @@
     transform: rotate(360deg);
   }
 }
+
+div[data-cart-info]span.material-icons{
+  font-size: 150px;
+}
