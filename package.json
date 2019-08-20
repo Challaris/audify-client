@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "private": true,
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^1.2.0",
     "axios": "^0.19.0",
     "chrome-launcher": "^0.11.2",
     "is-valid-http-url": "^1.0.2",
@@ -23,7 +24,7 @@
     "build:lambda": "netlify-lambda build src/lambda",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:css": "npx tailwind build src/css/tailwind.src.css -o src/css/output.css",
+    "build:css": "npx postcss src/css/tailwind.src.css -o src/css/output.css",
     "watch:css": "npx tailwind build src/css/tailwind.src.css -o src/css/output.css --watch"
   },
   "eslintConfig": {
