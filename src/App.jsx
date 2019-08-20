@@ -42,14 +42,15 @@ class App extends React.Component {
   }
 
   audit = () => {
-    const normailzedURL = URLNormailzer('http://cocatenate.dev');
+    const normailzedURL = URLNormailzer(this.state.url);
     this.setState({ isLoading: true });
     axios
       .get(`https://audify-server.herokuapp.com/audit?url=${normailzedURL}`)
-      .then(results => {
-        console.log(results);
+      .then(({ data }) => {
+        console.log(data);
+        this.setState({ results: data, isLoading: false });
+
         this.openModal();
-        this.setState({ results, isLoading: false });
       })
       .catch(() => {
         this.setState({ isLoading: false });
@@ -72,7 +73,7 @@ class App extends React.Component {
     const { url, modalIsOpen, results, isLoading, error } = this.state;
     const { closeModal, URLInput, audit, afterOpenModal } = this;
     return (
-      <div>
+      <>
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
@@ -209,7 +210,7 @@ class App extends React.Component {
             </div>
           </section>
         </div>
-      </div>
+      </>
     );
   }
 }
@@ -217,67 +218,50 @@ class App extends React.Component {
 export default App;
 
 function Audit({ results }) {
+  console.log('resulktys', results);
+
   return (
     <div className="flex h-full w-full  flex-col">
-      {/* <h1 className="text-3xl text-center my-10 text-gray-900">
-        Stay calm while i crunch the latest data for <br />
-        <span className="p-2 bg-purple-200 rounded-full">www.github.com</span>
-      </h1>
-      // {isLoading && <Spinner />}
-      <pre>{JSON.stringify(results)}</pre> */}
       <div className="flex flex-wrap">
-        <div className="flex items-center p-5">
-          <div className="rounded-full shadow flex items-center justify-center h-10 w-10 bg-red-500">
-            <Smartphone color="white" />
-          </div>
+        <Test
+          title="HTTPS TEST"
+          score={results['is_on_https'].score}
+          details={results['is_on_https'].description}
+        />
 
-          <div className="pl-2">
-            <h4 className="font-bold text-lg text-blue-700">FONT SIZE TEST</h4>
-            <p className="flex text-lg font-bold">
-              <XCircle color="red" className="mr-1" /> Test Failed
-            </p>
-            <p>The users can get a better experience if ...</p>
-          </div>
-        </div>
-        <div className="flex items-center p-5">
-          <div className="rounded-full flex items-center justify-center h-10 w-10 bg-red-500">
-            <Smartphone color="white" />
-          </div>
-          <div className="pl-2">
-            <h4 className="font-bold text-lg text-blue-700">FONT SIZE TEST</h4>
-            <p className="flex text-lg font-bold">
-              <XCircle color="red" className="mr-1" /> Test Failed
-            </p>
-            <p>The users can get a better experience if ...</p>
-          </div>
-        </div>
-        <div className="flex items-center p-5">
-          <div className="rounded-full flex items-center justify-center h-10 w-10 bg-red-500">
-            <Smartphone color="white" />
-          </div>
-          <div className="pl-2">
-            <h4 className="font-bold text-lg text-blue-700">FONT SIZE TEST</h4>
-            <p className="flex text-lg font-bold">
-              <XCircle color="red" className="mr-1" /> Test Failed
-            </p>
-            <p>The users can get a better experience if ...</p>
-          </div>
-        </div>
+        <Test
+          title="FONT SIZE TEST"
+          score={results['font_size'].score}
+          details={results['font_size'].description}
+        />
+      </div>
+    </div>
+  );
+}
 
-        <div className="flex items-center p-5">
-          <div className="rounded-full flex items-center justify-center h-10 w-10 bg-red-500">
-            <Type color="white" />
-          </div>
-          <div className="pl-2">
-            <h4 className="font-bold text-lg text-blue-700">
-              PROGRESSIVE WEB APP TEST
-            </h4>
-            <p className="flex text-lg font-bold">
-              <CheckCircle color="green" className="mr-1" /> Test Failed
-            </p>
-            <p>The users can get a better experience if ...</p>
-          </div>
-        </div>
+function Test({ title, score, details }) {
+  return (
+    <div className="flex items-center p-5">
+      {/* <div className="rounded-full shadow flex items-center justify-center h-10 w-10 bg-red-500">
+        <Smartphone color="white" />
+      </div> */}
+
+      <div className="pl-2">
+        <h4 className="font-bold text-lg text-blue-700">{title}</h4>
+        <p className="flex text-lg font-bold">
+          {(!score && (
+            <>
+              <XCircle color="red" className="mr-1" />
+              Test Failed
+            </>
+          )) || (
+            <>
+              <CheckCircle color="green" className="mr-1" />
+              Test Passed
+            </>
+          )}
+        </p>
+        <p>{details}</p>
       </div>
     </div>
   );
