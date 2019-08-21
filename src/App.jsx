@@ -214,8 +214,8 @@ class App extends React.Component {
                   <div className="flex flex-col justify-center">
                     <h4 className="font-bold text-purple-900">SEO</h4>
                     <h1 className="text-xl font-bold">
-                      How optimized is your <br />
-                      website for search engines
+                      Get to know where you stand<br />
+                      in few seconds
                     </h1>
                     <button className="h-12 rounded bg-white text-purple-900 px-5 font-bold mx-2">
                       LETS DO THIS
