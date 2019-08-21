@@ -214,7 +214,7 @@ class App extends React.Component {
                   <div className="flex flex-col justify-center">
                     <h4 className="font-bold text-purple-900">SEO</h4>
                     <h1 className="text-xl font-bold">
-                      Get to know where you stand<br />
+                      Get to know where you stand
                       in few seconds
                     </h1>
                     <button className="h-12 rounded bg-white text-purple-900 px-5 font-bold mx-2">
