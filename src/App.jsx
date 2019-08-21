@@ -106,7 +106,7 @@ class App extends React.Component {
               </li>
               <li className="text-xl">
                 <a
-                  href="https://www.github.com/charisol/coppily"
+                  href="https://form.myjotform.com/92325244482557"
                   className="hover:text-primary hover:text-bold"
                 >
                   Feedback
