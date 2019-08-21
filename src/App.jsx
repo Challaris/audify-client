@@ -24,11 +24,12 @@ class App extends React.Component {
     super();
 
     this.state = {
-      url: '',
+      url: 'https://kentcdodds.com',
       modalIsOpen: false,
       results: [],
       isLoading: false,
-      error: ''
+      error: '',
+      networkError: false
     };
 
     this.openModal = this.openModal.bind(this);
@@ -44,7 +45,7 @@ class App extends React.Component {
 
   audit = () => {
     const normailzedURL = URLNormailzer(this.state.url);
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, networkError: false });
     axios
       .get(`https://audify-server.herokuapp.com/audit?url=${normailzedURL}`)
       .then(({ data }) => {
@@ -54,7 +55,7 @@ class App extends React.Component {
         this.openModal();
       })
       .catch(() => {
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false, networkError: true });
       });
   };
   componentDidMount() {
@@ -71,7 +72,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { url, modalIsOpen, results, isLoading, error } = this.state;
+    const {
+      url,
+      modalIsOpen,
+      results,
+      isLoading,
+      error,
+      networkError
+    } = this.state;
     const { closeModal, URLInput, audit, afterOpenModal } = this;
     return (
       <>
@@ -129,6 +137,7 @@ class App extends React.Component {
                     <input
                       ref={URLInput}
                       value={url}
+                      spellCheck={false}
                       placeholder="www.mywebsite.com"
                       className="ml-5"
                       onChange={e =>
@@ -150,6 +159,12 @@ class App extends React.Component {
                   {error && (
                     <p className="font-light mt-1 text-red-500">
                       You should supply a URL for this test to beigin
+                    </p>
+                  )}
+
+                  {networkError && (
+                    <p className="font-light mt-1 text-lg text-red-500">
+                      An error occured, plase try again
                     </p>
                   )}
                 </div>
@@ -227,36 +242,45 @@ function Audit({ results }) {
   });
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <div className="flex flex-wrap">
-        <Test
-          title="HTTPS TEST"
-          score={results['is_on_https'].score}
-          details={results['is_on_https'].description}
-        />
+    <div className="h-full w-full">
+      <Test
+        title="HTTPS TEST"
+        score={results['is_on_https'].score}
+        details={results['is_on_https'].description}
+      />
 
-        <Test
-          title="FONT SIZE TEST"
-          score={results['font_size'].score}
-          details={results['font_size'].description}
-        />
+      <Test
+        title="FONT SIZE TEST"
+        score={results['font_size'].score}
+        details={results['font_size'].description}
+      />
 
-        <Test
-          title="CRAWLABILITY TEST"
-          score={results['is_crawlable'].score}
-          details={
-            'Checks if Google and other search engines can index your website properly'
-          }
-        />
+      <Test
+        title="CRAWLABILITY TEST"
+        score={results['is_crawlable'].score}
+        details={
+          'Checks if Google and other search engines can index your website properly'
+        }
+      />
 
-        <Test
-          title="FIRST CONTENTFUL PAINT"
-          score={results['first_contentful_paint'].score > 0.5 ? 1 : 0}
-          details={
-            'First Contentful Paint marks the time at which the first text or image is displayed'
-          }
-        />
-      </div>
+      <Test
+        title="FIRST CONTENTFUL PAINT TEST"
+        score={results['first_contentful_paint'].score > 0.5 ? 1 : 0}
+        details={
+          'First Contentful Paint marks the time at which the first text or image is displayed'
+        }
+      />
+
+      <Test
+        title="PROGRESSIVE WEB APP TEST"
+        score={
+          results['installable_manifest'].score == 1 &&
+          results['works_offline'].score == 1
+        }
+        details={
+          'Progressive web apps provide offline support and mobile app like exppericence for users'
+        }
+      />
     </div>
   );
 }
@@ -280,7 +304,7 @@ function Test({ title, score, details }) {
             </>
           )}
         </p>
-        <p>{details}</p>
+        <p style={{ wordBreak: 'break-word' }}>{details}</p>
       </div>
     </div>
   );
