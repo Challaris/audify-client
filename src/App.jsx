@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import URLNormailzer from 'normalize-url';
 import { XCircle, CheckCircle, Smartphone, Type, Globe } from 'react-feather';
+import { useTransition, animated } from 'react-spring';
 
 const customStyles = {
   content: {
@@ -218,10 +219,15 @@ class App extends React.Component {
 export default App;
 
 function Audit({ results }) {
-  console.log('resulktys', results);
+  const [show, set] = useState(false);
+  const transitions = useTransition(show, null, {
+    from: { position: 'absolute', opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 }
+  });
 
   return (
-    <div className="flex h-full w-full  flex-col">
+    <div className="flex h-full w-full flex-col">
       <div className="flex flex-wrap">
         <Test
           title="HTTPS TEST"
@@ -234,6 +240,22 @@ function Audit({ results }) {
           score={results['font_size'].score}
           details={results['font_size'].description}
         />
+
+        <Test
+          title="CRAWLABILITY TEST"
+          score={results['is_crawlable'].score}
+          details={
+            'Checks if Google and other search engines can index your website properly'
+          }
+        />
+
+        <Test
+          title="FIRST CONTENTFUL PAINT"
+          score={results['first_contentful_paint'].score > 0.5 ? 1 : 0}
+          details={
+            'First Contentful Paint marks the time at which the first text or image is displayed'
+          }
+        />
       </div>
     </div>
   );
@@ -242,10 +264,7 @@ function Audit({ results }) {
 function Test({ title, score, details }) {
   return (
     <div className="flex items-center p-5">
-      {/* <div className="rounded-full shadow flex items-center justify-center h-10 w-10 bg-red-500">
-        <Smartphone color="white" />
-      </div> */}
-
+      {/* <div className="rounded-full shadow flex items-center justify-center h-10 w-10 bg-red-500"><Smartphone color="white" /></div> */}
       <div className="pl-2">
         <h4 className="font-bold text-lg text-blue-700">{title}</h4>
         <p className="flex text-lg font-bold">
