@@ -133,27 +133,31 @@ class App extends React.Component {
               >
                 <div className="w-full sm:w-1/2 sm:mr-5 mb-5 sm:mb-0">
                   <div className="h-12 items-center flex rounded mr-2 text-gray-900 px-5 text-lg w-full bg-white">
-                    <Globe className="text-gray-800" />
-                    <input
-                      ref={URLInput}
-                      value={url}
-                      spellCheck={false}
-                      placeholder="www.mywebsite.com"
-                      className="ml-5"
-                      onChange={e =>
-                        this.setState({
-                          url: e.target.value,
-                          error: e.target.value.length > 0 ? '' : error
-                        })
-                      }
-                      onBlur={() =>
-                        url.length === 0 &&
-                        this.setState({
-                          error:
-                            'You should supply a URL for this test to beigin'
-                        })
-                      }
-                    />
+                    <div>
+                      <Globe className="text-gray-800" size={25} />
+                    </div>
+                    <div className="flex-1">
+                      <input
+                        ref={URLInput}
+                        value={url}
+                        spellCheck={false}
+                        placeholder="www.mywebsite.com"
+                        className="ml-5 w-full"
+                        onChange={e =>
+                          this.setState({
+                            url: e.target.value,
+                            error: e.target.value.length > 0 ? '' : error
+                          })
+                        }
+                        onBlur={() =>
+                          url.length === 0 &&
+                          this.setState({
+                            error:
+                              'You should supply a URL for this test to beigin'
+                          })
+                        }
+                      />
+                    </div>
                   </div>
 
                   {error && (
@@ -214,8 +218,7 @@ class App extends React.Component {
                   <div className="flex flex-col justify-center">
                     <h4 className="font-bold text-purple-900">SEO</h4>
                     <h1 className="text-xl font-bold">
-                      Get to know where you stand
-                      in few seconds
+                      Get to know where you stand in few seconds
                     </h1>
                     <button className="h-12 rounded bg-white text-purple-900 px-5 font-bold mx-2">
                       LETS DO THIS
